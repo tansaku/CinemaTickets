@@ -36,13 +36,14 @@ describe 'CinemaSeats'  do
   end
 
   it 'should be able to make a booking of one to five seats' do 
-    cinemaseats.make_booking([89,13,13])
+    cinemaseats.make_booking ([89,13,13])
     expect(cinemaseats.seatmap[89][13]).to eq("booked")
     cinemaseats.make_booking([20,20,24])
     expect(cinemaseats.seatmap[20][20]).to eq("booked")
     expect(cinemaseats.seatmap[20][22]).to eq("booked")
     expect(cinemaseats.seatmap[20][24]).to eq("booked")
   end
+
   it 'should not accept bookings with row requests on different rows' do 
     cinemaseats.same_row
     expect(cinemaseats.failed_bookings.length).to be(5)
@@ -75,9 +76,18 @@ describe 'CinemaSeats'  do
     expect(cinemaseats.invalid_seat_request(0,5)).to eq(false)
   end
 
-  # it 'should count the number of failed bookings' do 
-  #   cinemaseats.less_than_six_seats
-  #   cinemaseats.same_row
-  #   expect(cinemaseats.rejected_bookings).to eq(11)
-  # end
+  it 'should count the number of failed bookings' do 
+    cinemaseats.less_than_six_seats
+    cinemaseats.same_row
+    expect(cinemaseats.rejected_bookings).to eq(11)
+  end
+
+
+  it 'should be able to run text file and correct seats will be booked ' do 
+    cinemaseats.run_file
+    expect(cinemaseats.seatmap[0][3]).to eq("booked")
+    expect(cinemaseats.seatmap[0][1]).to eq(2)
+    expect(cinemaseats.seatmap[99][42]).to eq("booked")
+    expect(cinemaseats.seatmap[99][43]).to eq(44)
+  end
 end

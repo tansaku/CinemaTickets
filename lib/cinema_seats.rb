@@ -30,13 +30,17 @@ class CinemaSeats
   end
 
   def booking_requests
-    access_data.map { |rq|  rq.values_at(1,2,4)}
+    access_data.map { |rq| rq.values_at(1,2,4)}
   end
 
-  def make_booking(data=booking_requests)
+  def run_file
+    booking_requests.map { |i| make_booking(i)}
+  end
+
+  def make_booking(data)
     row = data[0]
     seats = data[1]..data[2]
-    seats.each { |seat| book_seat(row,seat)}
+    seats.each { |seat| invalid_seat_request(row,seat) ? @failed_bookings << data : book_seat(row,seat)}
   end
 
   def same_row
@@ -68,9 +72,10 @@ class CinemaSeats
   end
 
 
-  # def rejected_bookings
-  #   @failed_bookings.uniq!.count
-  # end
+  def rejected_bookings
+    # make_booking(data=booking_requests)
+    @failed_bookings.uniq
+  end
 end
 
 
