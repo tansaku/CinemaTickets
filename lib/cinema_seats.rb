@@ -59,5 +59,7 @@ class CinemaSeats
     @seatmap[row][seat - 1].is_a?(Integer) && @seatmap[row][seat - 2].is_a?(String) ? false : true
   end
 
-
+  def two_free_seats_to_right row, seat
+    @seatmap[row][seat + 1].is_a?(Integer) && @seatmap[row][seat + 2].is_a?(String) ? false : true
+  end
 end

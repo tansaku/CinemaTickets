@@ -57,9 +57,14 @@ describe 'CinemaSeats'  do
     expect(cinemaseats.check_seat_not_booked(0,2)).to eq(false)
   end
 
-  it 'should reject a booking if only one free seat to the left' do 
+  it 'should know if only one free seat to the left' do 
     cinemaseats.book_seat(0,2)
     cinemaseats.book_seat(0,4)
     expect(cinemaseats.two_free_seats_to_left(0,4)).to eq(false)
+  end
+  it 'should know if only one free seat to the right' do 
+    cinemaseats.book_seat(0,4)
+    cinemaseats.book_seat(0,2)
+    expect(cinemaseats.two_free_seats_to_right(0,2)).to eq(false)
   end
 end
