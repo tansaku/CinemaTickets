@@ -63,9 +63,14 @@ class CinemaSeats
     @seatmap[row][seat + 1].is_a?(Integer) && @seatmap[row][seat + 2].is_a?(String) ? true : false
   end
 
-  def rejected_bookings
-    @failed_bookings.uniq!.count
+  def invalid_seat_request(row,seat)
+    seat_already_booked(row,seat) || only_one_free_seat_to_left(row,seat) || only_one_free_seat_to_right(row,seat)
   end
+
+
+  # def rejected_bookings
+  #   @failed_bookings.uniq!.count
+  # end
 end
 
 

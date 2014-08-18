@@ -69,9 +69,15 @@ describe 'CinemaSeats'  do
     expect(cinemaseats.only_one_free_seat_to_right(0,2)).to eq(true)
   end
 
-  it 'should count the number of failed bookings' do 
-    cinemaseats.less_than_six_seats
-    cinemaseats.same_row
-    expect(cinemaseats.rejected_bookings).to eq(11)
+  it 'should know if a seat request is invalid' do 
+    cinemaseats.book_seat(0,2)
+    expect(cinemaseats.invalid_seat_request(0,4)).to eq(true)
+    expect(cinemaseats.invalid_seat_request(0,5)).to eq(false)
   end
+
+  # it 'should count the number of failed bookings' do 
+  #   cinemaseats.less_than_six_seats
+  #   cinemaseats.same_row
+  #   expect(cinemaseats.rejected_bookings).to eq(11)
+  # end
 end
