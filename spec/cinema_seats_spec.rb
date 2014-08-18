@@ -40,6 +40,7 @@ describe 'CinemaSeats'  do
     expect(cinemaseats.seatmap[89][13]).to eq("booked")
     cinemaseats.make_booking([20,20,24])
     expect(cinemaseats.seatmap[20][20]).to eq("booked")
+    expect(cinemaseats.seatmap[20][22]).to eq("booked")
     expect(cinemaseats.seatmap[20][24]).to eq("booked")
   end
   it 'should not accept bookings with row requests on different rows' do 
@@ -52,19 +53,25 @@ describe 'CinemaSeats'  do
     expect(cinemaseats.failed_bookings.count).to be(4)
   end
 
-  it 'should reject a booking if a seat is already booked' do 
+  it 'should know if a seat is already booked' do 
     cinemaseats.book_seat(0,2)
-    expect(cinemaseats.check_seat_not_booked(0,2)).to eq(false)
+    expect(cinemaseats.seat_already_booked(0,2)).to eq(true)
   end
 
   it 'should know if only one free seat to the left' do 
     cinemaseats.book_seat(0,2)
     cinemaseats.book_seat(0,4)
-    expect(cinemaseats.two_free_seats_to_left(0,4)).to eq(false)
+    expect(cinemaseats.only_one_free_seat_to_left(0,4)).to eq(true)
   end
   it 'should know if only one free seat to the right' do 
     cinemaseats.book_seat(0,4)
     cinemaseats.book_seat(0,2)
-    expect(cinemaseats.two_free_seats_to_right(0,2)).to eq(false)
+    expect(cinemaseats.only_one_free_seat_to_right(0,2)).to eq(true)
+  end
+
+  it 'should count the number of failed bookings' do 
+    cinemaseats.less_than_six_seats
+    cinemaseats.same_row
+    expect(cinemaseats.rejected_bookings).to eq(11)
   end
 end

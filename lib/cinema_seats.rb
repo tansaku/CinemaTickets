@@ -30,7 +30,7 @@ class CinemaSeats
   end
 
   def booking_requests
-    access_data.map { |rq|  rq.values_at(1,2,4)}#values_at(1,2,4) #if valid_booking?
+    access_data.map { |rq|  rq.values_at(1,2,4)}
   end
 
   def make_booking(data=booking_requests)
@@ -41,25 +41,31 @@ class CinemaSeats
 
   def same_row
     access_data.each do |d|
-     d[1] != d[3] ? @failed_bookings << d : true
+     d[1] != d[3] ? @failed_bookings << d.to_s : true
     end
   end
 
   def less_than_six_seats
     access_data.each do |d|
-      (d[4] - d[2] +1) > 5 ? @failed_bookings << d : true 
+      (d[4] - d[2] +1) > 5 ? @failed_bookings << d.to_s : true 
     end
   end
 
-  def check_seat_not_booked row, seat
-    @seatmap[row][seat].is_a?(String) ? false : true
+  def seat_already_booked row, seat
+    @seatmap[row][seat].is_a?(String) ? true : false
   end
 
-  def two_free_seats_to_left row, seat
-    @seatmap[row][seat - 1].is_a?(Integer) && @seatmap[row][seat - 2].is_a?(String) ? false : true
+  def only_one_free_seat_to_left row, seat
+    @seatmap[row][seat - 1].is_a?(Integer) && @seatmap[row][seat - 2].is_a?(String) ? true : false
   end
 
-  def two_free_seats_to_right row, seat
-    @seatmap[row][seat + 1].is_a?(Integer) && @seatmap[row][seat + 2].is_a?(String) ? false : true
+  def only_one_free_seat_to_right row, seat
+    @seatmap[row][seat + 1].is_a?(Integer) && @seatmap[row][seat + 2].is_a?(String) ? true : false
+  end
+
+  def rejected_bookings
+    @failed_bookings.uniq!.count
   end
 end
+
+
