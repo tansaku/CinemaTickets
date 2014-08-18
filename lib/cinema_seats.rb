@@ -47,7 +47,12 @@ class CinemaSeats
 
   def less_than_six_seats
     access_data.each do |d|
-      (d[4] - d[2] +1) > 5 ? @failed_bookings <<d : true 
+      (d[4] - d[2] +1) > 5 ? @failed_bookings << d : true 
     end
   end
+
+  def check_seat_not_booked row, seat
+    @seatmap[row][seat].is_a?(String) ? false : true
+  end
+
 end

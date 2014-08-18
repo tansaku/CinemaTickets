@@ -51,4 +51,10 @@ describe 'CinemaSeats'  do
     cinemaseats.less_than_six_seats
     expect(cinemaseats.failed_bookings.count).to be(4)
   end
+
+  it 'should reject a booking if a seat is already booked' do 
+    cinemaseats.book_seat(0,2)
+    expect(cinemaseats.check_seat_not_booked(0,2)).to eq(false)
+
+  end
 end
