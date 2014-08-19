@@ -16,7 +16,6 @@ class CinemaSeats
   end
 
   def book_seat row, seat, request
-    invalid_seat_request(row,seat,request)
     bookit = @seatmap[row]
     bookit.delete_at(seat)
     bookit.insert(seat, "booked")
@@ -30,14 +29,7 @@ class CinemaSeats
       d.scan(/\d+/).map { |s| s.to_i}
     end
   end
-  # def booking_requests
-  #   access_data.select { |i| make_booking(i)}
-  # end
-
-  # def run_file
-  #   booking_requests.map { |i| make_booking(i)}
-  # end
-
+  
   def make_booking
     access_data.map do |data|
     request = data
@@ -73,18 +65,18 @@ class CinemaSeats
   end
 
   def invalid_seat_request(row,seat,request)
-    #access_data.each do |row,seat|
-    seat_already_booked(row,seat) || only_one_free_seat_to_left(row,seat) || only_one_free_seat_to_right(row,seat)  ? @failed_bookings << request.to_s : false   
+    same_row
+    less_than_six_seats
+    seat_already_booked(row,seat) || only_one_free_seat_to_left(row,seat) || only_one_free_seat_to_right(row,seat)  ? @failed_bookings << request.to_s : false     
     
-end
-
-  # def filter(row,seat,request)
-  #   @failed_bookings << request if invalid_seat_request(row,seat,request)
-  # end
+  end
 
   def rejected_bookings
-    @failed_bookings.uniq
+    @failed_bookings.uniq.count
 
+  end
+  def show_bookings
+    @seatmap[3]
   end
 end
 

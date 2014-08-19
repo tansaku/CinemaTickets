@@ -26,14 +26,6 @@ describe 'CinemaSeats'  do
   it 'should extract all 5 data elements from the booking request file' do 
     expect(cinemaseats.access_data).to include([0,89,13,89,13])
   end
-  
-  # it 'should extract booking requests from the request data file' do 
-  #   expect(cinemaseats.booking_requests).to include([16, 37, 37])
-  #   expect(cinemaseats.booking_requests).to include([89,13, 13])
-  #   expect(cinemaseats.booking_requests).to include([76,35, 37])
-  #   expect(cinemaseats.booking_requests[0]).to eq([89,13,13])
-  #   expect(cinemaseats.booking_requests[15]).to eq([91,26,27])
-  # end
 
   it 'should be able to make a booking of one to five seats' do 
     cinemaseats.make_booking
@@ -73,8 +65,8 @@ describe 'CinemaSeats'  do
   it 'should know if a seat request is invalid' do 
     cinemaseats.book_seat(0,2,[1,0,2,0,4])
     expect(cinemaseats.failed_bookings.count).to eq(0)
-    expect(cinemaseats.invalid_seat_request(0,4,[1,0,2,0,4])).to eq(["[1, 0, 2, 0, 4]"])
-    expect(cinemaseats.failed_bookings.count).to eq(1)
+    expect(cinemaseats.invalid_seat_request(0,4,[1,0,2,0,4])).to include("[1, 0, 2, 0, 4]")
+    expect(cinemaseats.failed_bookings.count).to eq(10)
     expect(cinemaseats.invalid_seat_request(0,5,[1,0,2,0,5])).to eq(false)
   end
 
@@ -85,12 +77,12 @@ describe 'CinemaSeats'  do
     expect(cinemaseats.rejected_bookings).to eq(11)
   end
 
+  it 'should output an updated seatmap' do 
 
-  # it 'should be able to run text file and correct seats will be booked ' do 
-  #   cinemaseats.run_file
-  #   expect(cinemaseats.seatmap[0][3]).to eq("booked")
-  #   expect(cinemaseats.seatmap[0][1]).to eq(2)
-  #   expect(cinemaseats.seatmap[99][42]).to eq("booked")
-  #   expect(cinemaseats.seatmap[99][43]).to eq(44)
-  # end
+    cinemaseats.less_than_six_seats
+    cinemaseats.same_row
+    cinemaseats.make_booking 
+    expect(cinemaseats.show_bookings).to include([1,2,3,4,5,"booked","booked",8])
+
+  end
 end
