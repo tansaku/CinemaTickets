@@ -15,43 +15,48 @@ class CinemaSeats
     @seatmap[row][seat]
   end
 
-  def book_seat row, seat
+  def book_seat row, seat, request
+    invalid_seat_request(row,seat,request)
     bookit = @seatmap[row]
     bookit.delete_at(seat)
     bookit.insert(seat, "booked")
     @seatmap.delete_at(row)
     @seatmap.insert(row, bookit)
+   
   end
 
   def access_data
-    File.open('test_data.txt', 'r').map do |d| 
+    File.open('test_data.txt', 'r').map  do |d| 
       d.scan(/\d+/).map { |s| s.to_i}
     end
   end
+  # def booking_requests
+  #   access_data.select { |i| make_booking(i)}
+  # end
 
-  def booking_requests
-    access_data.map { |rq| rq.values_at(1,2,4)}
-  end
+  # def run_file
+  #   booking_requests.map { |i| make_booking(i)}
+  # end
 
-  def run_file
-    booking_requests.map { |i| make_booking(i)}
-  end
-
-  def make_booking(data)
-    row = data[0]
-    seats = data[1]..data[2]
-    seats.each { |seat| invalid_seat_request(row,seat) ? @failed_bookings << data : book_seat(row,seat)}
+  def make_booking
+    access_data.map do |data|
+    request = data
+    row = data[1]
+    seats = data[2]..data[4] 
+    seats.select { |seat| book_seat(row,seat,request)}     
+    end
+  
   end
 
   def same_row
     access_data.each do |d|
-     d[1] != d[3] ? @failed_bookings << d.to_s : true
+     d[1] != d[3] ? @failed_bookings << d.to_s : false
     end
   end
 
   def less_than_six_seats
     access_data.each do |d|
-      (d[4] - d[2] +1) > 5 ? @failed_bookings << d.to_s : true 
+      ((d[4] - d[2]) +1) > 5 ? @failed_bookings << d.to_s : false 
     end
   end
 
@@ -67,15 +72,19 @@ class CinemaSeats
     @seatmap[row][seat + 1].is_a?(Integer) && @seatmap[row][seat + 2].is_a?(String) ? true : false
   end
 
-  def invalid_seat_request(row,seat)
-    seat_already_booked(row,seat) || only_one_free_seat_to_left(row,seat) || only_one_free_seat_to_right(row,seat)
-  end
-
-
-  def rejected_bookings
-    # make_booking(data=booking_requests)
-    @failed_bookings.uniq
-  end
+  def invalid_seat_request(row,seat,request)
+    #access_data.each do |row,seat|
+    seat_already_booked(row,seat) || only_one_free_seat_to_left(row,seat) || only_one_free_seat_to_right(row,seat)  ? @failed_bookings << request.to_s : false   
+    
 end
 
+  # def filter(row,seat,request)
+  #   @failed_bookings << request if invalid_seat_request(row,seat,request)
+  # end
+
+  def rejected_bookings
+    @failed_bookings.uniq
+
+  end
+end
 
