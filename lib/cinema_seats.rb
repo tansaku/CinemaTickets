@@ -7,7 +7,7 @@ class CinemaSeats
 
     attr_accessor :seatmap, :failed_bookings
 
-  def all_seats
+  def empty_seats
     @seatmap
   end
 
@@ -15,7 +15,8 @@ class CinemaSeats
     @seatmap[row][seat]
   end
 
-  def book_seat row, seat, request
+  def book_seat row, seat
+    remove_bad_booking_requests
     bookit = @seatmap[row]
     bookit.delete_at(seat)
     bookit.insert(seat, "booked")
@@ -29,21 +30,29 @@ class CinemaSeats
       d.scan(/\d+/).map { |s| s.to_i}
     end
   end
+  def remove_bad_booking_requests
+    cleaned_data = access_data.delete_if do |d|
+      (d[1] != d[3]) || (((d[4] - d[2]) +1) > 5)
+    end
+    cleaned_data
+    #cleaned_data = same_row.delete_if { |b| @failed_bookings.include?(b)}
+  end
   
   def make_booking
-    access_data.map do |data|
+    remove_bad_booking_requests.map do |data|
     request = data
     row = data[1]
     seats = data[2]..data[4] 
-    seats.select { |seat| book_seat(row,seat,request)}     
+    seats.select { |seat| book_seat(row,seat)}     
     end
   
   end
 
   def same_row
-    access_data.each do |d|
+     access_data.each do |d|
      d[1] != d[3] ? @failed_bookings << d.to_s : false
     end
+
   end
 
   def less_than_six_seats
@@ -72,7 +81,7 @@ class CinemaSeats
   end
 
   def rejected_bookings
-    @failed_bookings.uniq.count
+    @failed_bookings.uniq
 
   end
   def show_bookings

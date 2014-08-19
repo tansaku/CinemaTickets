@@ -4,7 +4,7 @@ describe 'CinemaSeats'  do
       let(:cinemaseats) {CinemaSeats.new}
 
   it 'should be able to show an array of numbered seats' do
-    expect(cinemaseats.all_seats).to include(1..50)
+    expect(cinemaseats.empty_seats).to include(1..50)
   end
 
   it 'should have a total of 50 * 100 seats' do 
@@ -17,14 +17,19 @@ describe 'CinemaSeats'  do
   end
 
   it 'should book a seat by row and seat index' do
-    cinemaseats.book_seat(0,2,[])
+    cinemaseats.book_seat(0,2)
     expect(cinemaseats.seatmap[0][2]).to eq("booked")
-    cinemaseats.book_seat(5,60,[])
+    cinemaseats.book_seat(5,60)
     expect(cinemaseats.seatmap[5][60]).to eq("booked")
   end
 
   it 'should extract all 5 data elements from the booking request file' do 
     expect(cinemaseats.access_data).to include([0,89,13,89,13])
+  end
+
+  it "should remove bad requests from the booking requests" do 
+    expect(cinemaseats.remove_bad_booking_requests).not_to include([32, 2, 11, 3, 21])
+    expect(cinemaseats.remove_bad_booking_requests).to include([0,89,13,89,13])
   end
 
   it 'should be able to make a booking of one to five seats' do 
@@ -46,24 +51,24 @@ describe 'CinemaSeats'  do
   end
 
   it 'should know if a seat is already booked' do 
-    cinemaseats.book_seat(0,2,[])
+    cinemaseats.book_seat(0,2)
     expect(cinemaseats.seat_already_booked(0,2)).to eq(true)
     expect(cinemaseats.seat_already_booked(0,3)).to eq(false)
   end
 
   it 'should know if only one free seat to the left' do 
-    cinemaseats.book_seat(0,2,[1,0,2,0,4])
-    cinemaseats.book_seat(0,4,[1,0,2,0,4])
+    cinemaseats.book_seat(0,2)
+    cinemaseats.book_seat(0,4)
     expect(cinemaseats.only_one_free_seat_to_left(0,4)).to eq(true)
   end
   it 'should know if only one free seat to the right' do 
-    cinemaseats.book_seat(0,4,[1,0,2,0,4])
-    cinemaseats.book_seat(0,2,[1,0,2,0,4])
+    cinemaseats.book_seat(0,4)
+    cinemaseats.book_seat(0,2)
     expect(cinemaseats.only_one_free_seat_to_right(0,2)).to eq(true)
   end
 
   it 'should know if a seat request is invalid' do 
-    cinemaseats.book_seat(0,2,[1,0,2,0,4])
+    cinemaseats.book_seat(0,2)
     expect(cinemaseats.failed_bookings.count).to eq(0)
     expect(cinemaseats.invalid_seat_request(0,4,[1,0,2,0,4])).to include("[1, 0, 2, 0, 4]")
     expect(cinemaseats.failed_bookings.count).to eq(10)
@@ -78,11 +83,10 @@ describe 'CinemaSeats'  do
   end
 
   it 'should output an updated seatmap' do 
-
     cinemaseats.less_than_six_seats
     cinemaseats.same_row
     cinemaseats.make_booking 
-    expect(cinemaseats.show_bookings).to include([1,2,3,4,5,"booked","booked",8])
+    expect(cinemaseats.show_bookings).to include(1,2,3,4,5,"booked","booked",8)
 
   end
 end
