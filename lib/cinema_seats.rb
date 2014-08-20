@@ -20,8 +20,7 @@ class CinemaSeats
     bookit.delete_at(seat)
     bookit.insert(seat, "booked")
     @seatmap.delete_at(row)
-    @seatmap.insert(row, bookit)
-   
+    @seatmap.insert(row, bookit)  
   end
 
   def access_data
@@ -38,15 +37,12 @@ class CinemaSeats
   
   def make_bookings
     remove_bad_booking_requests.map do |data|
-    request = data
-    row = data[1]
-    seats = data[2]..data[4] 
+    request = data, row = data[1], seats = data[2]..data[4] 
     seats.select do |seat| 
       invalid_seat_request(row,seat,request)  
       book_seat(row,seat)
       end     
-    end
-  
+    end  
   end
 
   def seat_already_booked row, seat
@@ -66,11 +62,20 @@ class CinemaSeats
   end
 
   def rejected_bookings
-    @failed_bookings.uniq.count
+    make_bookings
+    num = @failed_bookings.uniq.count
+    puts "There are #{num} rejected bookings."
+    num
   end
 
   def show_bookings
-    @seatmap
+    make_bookings
+    @seatmap.each do |seat|
+      seat.to_s
+      puts "#{seat} "
+    end
   end
 end
 
+CinemaSeats.new.show_bookings
+CinemaSeats.new.rejected_bookings

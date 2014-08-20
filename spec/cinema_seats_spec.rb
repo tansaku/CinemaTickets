@@ -40,16 +40,6 @@ describe 'CinemaSeats'  do
     expect(cinemaseats.seatmap[32][24]).to eq("booked")
   end
 
-  # it 'should add invalid bookings on different rows to the failed bookings array' do 
-  #   cinemaseats.same_row
-  #   expect(cinemaseats.failed_bookings.length).to eq(5)
-  # end
-
-  # it 'should add invalid requests for more than five seats to the failed bookings array' do 
-  #   cinemaseats.less_than_six_seats
-  #   expect(cinemaseats.failed_bookings.length).to eq(4)
-  # end
-
   it 'should know if a seat is already booked' do 
     cinemaseats.book_seat(0,2)
     expect(cinemaseats.seat_already_booked(0,2)).to eq(true)
@@ -73,9 +63,9 @@ describe 'CinemaSeats'  do
     expect(cinemaseats.invalid_seat_request(0,5,[1,0,2,0,5])).to eq(false)
   end
 
-  it 'should count the number of failed bookings' do 
+  it 'should output the number of failed bookings' do 
     cinemaseats.make_bookings
-    expect(cinemaseats.rejected_bookings).to eq(11)
+    expect(cinemaseats.rejected_bookings).to be(11)
   end
 
   it 'should output an updated seatmap' do 
