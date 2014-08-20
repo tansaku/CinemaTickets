@@ -62,7 +62,7 @@ class CinemaSeats
   def rejected_bookings
     make_bookings
     num = @failed_bookings.uniq.count
-    puts "-----------------------------------".center(110)
+    puts "___________________________________".center(110)
     puts "There are #{num} rejected bookings.".center(110)
     puts "-----------------------------------".center(110)
     num
