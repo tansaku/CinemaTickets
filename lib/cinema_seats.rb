@@ -75,7 +75,7 @@ class CinemaSeats
     count = 0
     @seatmap.each do |row|
       row.to_s
-      puts " ROW : #{count+1} : #{row} "
+      puts " ROW : #{count+1} : #{row}\n "
       count += 1
     end
   end
