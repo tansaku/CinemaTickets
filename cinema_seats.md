@@ -1,8 +1,8 @@
-                                     -----------------------------------                                      
+                                     ___________________________________                                      
                                        There are 11 rejected bookings.                                        
-                                     -----------------------------------                                      
+                                     ___________________________________                                      
                                  Updated Seatmap with all confirmed bookings.                                 
-                                    -----------------------------------                                     
+                                    ___________________________________                                     
  ROW : 1 : [1, 2, "booked", "booked", 5, 6, 7, 8, 9, 10, "booked", "booked", 13, 14, "booked", "booked", "booked", "booked", 19, 20, 21, 22, 23, 24, "booked", "booked", "booked", "booked", 29, 30, 31, "booked", "booked", "booked", 35, 36, 37, 38, 39, 40, 41, 42, 43, "booked", 45, 46, 47, 48, 49, 50]
  
  ROW : 2 : [1, 2, "booked", "booked", "booked", "booked", 7, 8, 9, "booked", "booked", "booked", "booked", 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, "booked", "booked", "booked", 31, 32, "booked", 34, 35, "booked", 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50]

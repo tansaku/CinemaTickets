@@ -64,14 +64,14 @@ class CinemaSeats
     num = @failed_bookings.uniq.count
     puts "___________________________________".center(110)
     puts "There are #{num} rejected bookings.".center(110)
-    puts "-----------------------------------".center(110)
+    puts "___________________________________".center(110)
     num
   end
 
   def show_bookings
     make_bookings
     puts "Updated Seatmap with all confirmed bookings.".center(110)
-    puts "-----------------------------------".center(108)
+    puts "___________________________________".center(108)
     count = 0
     @seatmap.each do |row|
       row.to_s
