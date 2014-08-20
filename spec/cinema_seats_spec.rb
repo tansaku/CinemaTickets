@@ -33,19 +33,19 @@ describe 'CinemaSeats'  do
   end
 
   it 'should be able to make a booking of one to five seats' do 
-    cinemaseats.make_booking
+    cinemaseats.make_bookings
     expect(cinemaseats.seatmap[89][13]).to eq("booked")
     expect(cinemaseats.seatmap[32][22]).to eq("booked")
     expect(cinemaseats.seatmap[32][23]).to eq("booked")
     expect(cinemaseats.seatmap[32][24]).to eq("booked")
   end
 
-  it 'should not accept bookings with row requests on different rows' do 
+  it 'should add invalid bookings on different rows to the failed bookings array' do 
     cinemaseats.same_row
     expect(cinemaseats.failed_bookings.length).to eq(5)
   end
 
-  it 'should reject booking requests for more than five seats' do 
+  it 'should add invalid requests for more than five seats to the failed bookings array' do 
     cinemaseats.less_than_six_seats
     expect(cinemaseats.failed_bookings.length).to eq(4)
   end
@@ -69,24 +69,23 @@ describe 'CinemaSeats'  do
 
   it 'should know if a seat request is invalid' do 
     cinemaseats.book_seat(0,2)
-    expect(cinemaseats.failed_bookings.count).to eq(0)
+    #expect(cinemaseats.failed_bookings.count).to eq(0)
     expect(cinemaseats.invalid_seat_request(0,4,[1,0,2,0,4])).to include("[1, 0, 2, 0, 4]")
-    expect(cinemaseats.failed_bookings.count).to eq(10)
+    #expect(cinemaseats.failed_bookings.count).to eq(10)
     expect(cinemaseats.invalid_seat_request(0,5,[1,0,2,0,5])).to eq(false)
   end
 
   it 'should count the number of failed bookings' do 
-    cinemaseats.less_than_six_seats
-    cinemaseats.same_row
-    cinemaseats.make_booking
+    cinemaseats.make_bookings
     expect(cinemaseats.rejected_bookings).to eq(11)
   end
 
   it 'should output an updated seatmap' do 
-    cinemaseats.less_than_six_seats
-    cinemaseats.same_row
-    cinemaseats.make_booking 
-    expect(cinemaseats.show_bookings).to include(1,2,3,4,5,"booked","booked",8)
-
+    cinemaseats.make_bookings
+    expect(cinemaseats.show_bookings).to include([1, 2, "booked", "booked", 5, 6, 7, 8, 9, 
+                                                 10, "booked", "booked", 13, 14, "booked", "booked", "booked", "booked", 19, 
+                                                 20, 21, 22, 23, 24, "booked", "booked", "booked", "booked", 29, 
+                                                 30, 31, "booked", "booked", "booked", 35, 36, 37, 38, 39, 
+                                                 40, 41, 42, 43, "booked", 45, 46, 47, 48, 49, 50])
   end
 end

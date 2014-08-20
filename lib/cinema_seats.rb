@@ -16,7 +16,7 @@ class CinemaSeats
   end
 
   def book_seat row, seat
-    remove_bad_booking_requests
+    #invalid_seat_request(row)
     bookit = @seatmap[row]
     bookit.delete_at(seat)
     bookit.insert(seat, "booked")
@@ -35,10 +35,9 @@ class CinemaSeats
       (d[1] != d[3]) || (((d[4] - d[2]) +1) > 5)
     end
     cleaned_data
-    #cleaned_data = same_row.delete_if { |b| @failed_bookings.include?(b)}
   end
   
-  def make_booking
+  def make_bookings
     remove_bad_booking_requests.map do |data|
     request = data
     row = data[1]
@@ -52,7 +51,6 @@ class CinemaSeats
      access_data.each do |d|
      d[1] != d[3] ? @failed_bookings << d.to_s : false
     end
-
   end
 
   def less_than_six_seats
@@ -74,18 +72,16 @@ class CinemaSeats
   end
 
   def invalid_seat_request(row,seat,request)
-    same_row
-    less_than_six_seats
     seat_already_booked(row,seat) || only_one_free_seat_to_left(row,seat) || only_one_free_seat_to_right(row,seat)  ? @failed_bookings << request.to_s : false     
     
   end
 
   def rejected_bookings
     @failed_bookings.uniq
-
   end
+  
   def show_bookings
-    @seatmap[3]
+    @seatmap
   end
 end
 
