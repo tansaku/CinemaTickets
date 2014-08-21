@@ -39,6 +39,12 @@ class CinemaSeats
     end  
   end
 
+  def invalid_seat_request row,seat,request
+    seat_already_booked(row,seat) ||
+    only_one_free_seat_to_left(row,seat) ||
+    only_one_free_seat_to_right(row,seat)  ? @failed_bookings << request.to_s : false       
+  end
+
   def seat_already_booked row, seat
     @seatmap[row][seat].is_a?(String) 
   end
@@ -49,12 +55,6 @@ class CinemaSeats
 
   def only_one_free_seat_to_right row, seat
     @seatmap[row][seat + 1].is_a?(Integer) && @seatmap[row][seat + 2].is_a?(String)
-  end
-
-  def invalid_seat_request row,seat,request
-    seat_already_booked(row,seat) ||
-    only_one_free_seat_to_left(row,seat) ||
-    only_one_free_seat_to_right(row,seat)  ? @failed_bookings << request.to_s : false       
   end
 
   def process_bookings

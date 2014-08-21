@@ -41,14 +41,13 @@ describe 'CinemaSeats'  do
     expect(cinemaseats.seat_already_booked(0,3)).to eq(false)
   end
 
-  it 'should know if only one free seat to the left' do 
-    cinemaseats.book_seat(0,2)
+  it 'should know if only one free seat on either side of seat request' do 
     cinemaseats.book_seat(0,4)
-    expect(cinemaseats.only_one_free_seat_to_left(0,4)).to eq(true)
+    expect(cinemaseats.only_one_free_seat_to_left(0,6)).to eq(true)
+    
   end
   it 'should know if only one free seat to the right' do 
     cinemaseats.book_seat(0,4)
-    cinemaseats.book_seat(0,2)
     expect(cinemaseats.only_one_free_seat_to_right(0,2)).to eq(true)
   end
 
@@ -65,8 +64,8 @@ describe 'CinemaSeats'  do
                                                  30, 31, "booked", "booked", "booked", 35, 36, 37, 38, 39, 
                                                  40, 41, 42, 43, "booked", 45, 46, 47, 48, 49, 50])
   end
-  
-   it 'when run it should output to a text file' do
+
+   it 'should output the updated seatmap to a markdown file' do
     cinemaseats.save_results_to_file
     expect(File.exists?('cinema_seats.md')).to be true
   end
