@@ -42,15 +42,15 @@ class CinemaSeats
   end
 
   def seat_already_booked row, seat
-    @seatmap[row][seat].is_a?(String) #? true : false
+    @seatmap[row][seat].is_a?(String) 
   end
 
   def only_one_free_seat_to_left row, seat
-    @seatmap[row][seat - 1].is_a?(Integer) && @seatmap[row][seat - 2].is_a?(String) #? true : false
+    @seatmap[row][seat - 1].is_a?(Integer) && @seatmap[row][seat - 2].is_a?(String) 
   end
 
   def only_one_free_seat_to_right row, seat
-    @seatmap[row][seat + 1].is_a?(Integer) && @seatmap[row][seat + 2].is_a?(String) #? true : false
+    @seatmap[row][seat + 1].is_a?(Integer) && @seatmap[row][seat + 2].is_a?(String)
   end
 
   def invalid_seat_request(row,seat,request)
@@ -63,19 +63,19 @@ class CinemaSeats
     make_bookings
     num = @failed_bookings.uniq.count
     puts "___________________________________".center(110)
-    puts "There are #{num} rejected bookings.".center(110)
+    puts "**There are #{num} rejected bookings.**".center(110)
     puts "___________________________________".center(110)
     num
   end
 
   def show_bookings
     make_bookings
-    puts "Updated Seatmap with all confirmed bookings.".center(110)
-    puts "___________________________________".center(108)
+    puts "**Updated Seatmap with all confirmed bookings.**".center(110)
+    puts "___________________________________".center(110)
     count = 0
     @seatmap.each do |row|
       row.to_s
-      puts " ROW : #{count+1} : #{row}\n "
+      puts " **ROW : #{count+1} :** #{row}\n "
       count += 1
     end
   end
