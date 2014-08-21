@@ -14,8 +14,8 @@ describe 'CinemaSeats'  do
   it 'should book a seat by row and seat index' do
     cinemaseats.book_seat(0,2)
     expect(cinemaseats.seatmap[0][2]).to eq("booked")
-    cinemaseats.book_seat(5,60)
-    expect(cinemaseats.seatmap[5][60]).to eq("booked")
+    cinemaseats.book_seat(5,45)
+    expect(cinemaseats.seatmap[5][45]).to eq("booked")
   end
 
   it 'should extract all 5 data elements from the booking request file' do 
@@ -58,17 +58,14 @@ describe 'CinemaSeats'  do
     expect(cinemaseats.invalid_seat_request(0,5,[1,0,2,0,5])).to eq(false)
   end
 
-  it 'should output the number of failed bookings' do 
-    expect(cinemaseats.rejected_bookings).to be(11)
-  end
-
   it 'should output an updated seatmap' do 
-    expect(cinemaseats.show_bookings).to include([1, 2, "booked", "booked", 5, 6, 7, 8, 9, 
+    expect(cinemaseats.process_bookings).to include([1, 2, "booked", "booked", 5, 6, 7, 8, 9, 
                                                  10, "booked", "booked", 13, 14, "booked", "booked", "booked", "booked", 19, 
                                                  20, 21, 22, 23, 24, "booked", "booked", "booked", "booked", 29, 
                                                  30, 31, "booked", "booked", "booked", 35, 36, 37, 38, 39, 
                                                  40, 41, 42, 43, "booked", 45, 46, 47, 48, 49, 50])
   end
+  
    it 'when run it should output to a text file' do
     cinemaseats.save_results_to_file
     expect(File.exists?('cinema_seats.md')).to be true

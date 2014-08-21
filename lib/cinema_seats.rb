@@ -13,10 +13,7 @@ class CinemaSeats
 
   def book_seat row, seat
     bookit = @seatmap[row]
-    bookit.delete_at(seat)
-    bookit.insert(seat, "booked")
-    @seatmap.delete_at(row)
-    @seatmap.insert(row, bookit)  
+    bookit.collect! { |i| i == seat+1 ? "booked" : i }  
   end
 
   def access_data
@@ -24,6 +21,7 @@ class CinemaSeats
       d.scan(/\d+/).map { |s| s.to_i}
     end
   end
+
   def remove_bad_booking_requests
     cleaned_data = access_data.delete_if do |d|
       d[1] != d[3] || d[4] - d[2] +1 > 5 ? @failed_bookings << d.to_s : false
@@ -53,23 +51,18 @@ class CinemaSeats
     @seatmap[row][seat + 1].is_a?(Integer) && @seatmap[row][seat + 2].is_a?(String)
   end
 
-  def invalid_seat_request(row,seat,request)
+  def invalid_seat_request row,seat,request
     seat_already_booked(row,seat) ||
     only_one_free_seat_to_left(row,seat) ||
     only_one_free_seat_to_right(row,seat)  ? @failed_bookings << request.to_s : false       
   end
 
-  def rejected_bookings
+  def process_bookings
     make_bookings
     num = @failed_bookings.uniq.count
     puts "___________________________________".center(110)
-    puts "**There are #{num} rejected bookings.**".center(110)
+    puts "*There are #{num} rejected bookings.*".center(110)
     puts "___________________________________".center(110)
-    num
-  end
-
-  def show_bookings
-    make_bookings
     puts "**Updated Seatmap with all confirmed bookings.**".center(110)
     puts "___________________________________".center(110)
     count = 0
@@ -79,13 +72,14 @@ class CinemaSeats
       count += 1
     end
   end
+
   def save_results_to_file
     $stdout = File.open('cinema_seats.md', 'w') 
     $stdout.sync = true
-    rejected_bookings
-    show_bookings
+    process_bookings
   end
 end
+
 CinemaSeats.new.save_results_to_file
 
 
