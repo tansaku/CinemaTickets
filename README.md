@@ -1,7 +1,23 @@
 `````
-CINEMA SEATS TEST
+##  CINEMA SEATS TEST
 `````
-* The Challenge
+The full challenge as received is at the bottom of this Readme file. 
+
+I tackled this project using pure Ruby code, in a TDD environment using RSpec. Strictly sticking to the TDD mantra of write test, fail test, write code, pass test I endeavoured to let the tests drive the code. 
+
+
+In Github the program has been run, creating the file 'cinema_seats.md' so the resulting output can be seen. I used Markdown so it was Github freindly, but in real life this could go to a text file or html etc  depending on the needs of the user. 
+
+`````
+How to run the file.
+
+In the terminal cd to the repo, and run the file using 'ruby lib/cinema_seats.rb' 
+`````
+
+``````
+###The Challenge
+``````
+
 A cinema has a theatre of 100 rows, each with 50 seats. Customers request particular seats when making a booking.
 Bookings are processed on a first-come, first-served basis. A booking is accepted as long as it is for five or fewer
 seats, all seats are adjacent and on the same row, all requested seats are available, and accepting the booking would
