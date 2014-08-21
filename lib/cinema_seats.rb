@@ -42,15 +42,15 @@ class CinemaSeats
   end
 
   def seat_already_booked row, seat
-    @seatmap[row][seat].is_a?(String) ? true : false
+    @seatmap[row][seat].is_a?(String) #? true : false
   end
 
   def only_one_free_seat_to_left row, seat
-    @seatmap[row][seat - 1].is_a?(Integer) && @seatmap[row][seat - 2].is_a?(String) ? true : false
+    @seatmap[row][seat - 1].is_a?(Integer) && @seatmap[row][seat - 2].is_a?(String) #? true : false
   end
 
   def only_one_free_seat_to_right row, seat
-    @seatmap[row][seat + 1].is_a?(Integer) && @seatmap[row][seat + 2].is_a?(String) ? true : false
+    @seatmap[row][seat + 1].is_a?(Integer) && @seatmap[row][seat + 2].is_a?(String) #? true : false
   end
 
   def invalid_seat_request(row,seat,request)
