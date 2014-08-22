@@ -1,22 +1,33 @@
-`````
-##  CINEMA SEATS TEST
-`````
+CINEMA SEATS 
+============
+
 The full challenge as received is at the bottom of this Readme file. 
 
-I tackled this project using pure Ruby code, in a TDD environment using RSpec. Strictly sticking to the TDD mantra of write test, fail test, write code, pass test I endeavoured to let the tests drive the code. 
+Some notes on the challenge
+===========================
 
 
-In Github the program has been run, creating the file 'cinema_seats.md' so the resulting output can be seen. I used Markdown so it was Github freindly, but in real life this could go to a text file or html etc  depending on the needs of the user. 
+I tackled this project using Ruby, in a TDD environment using RSpec. Strictly sticking to the TDD mantra of write test, see the test fail, write code to pass the test - I let the tests drive the code. 
+
+I had some debate about the 'invalid_seat_request' method. This method calls the three helper methods to determine whether a seat request is valid or not, according to the rules in the challenge. It could have been written as one, fairly long method, and there is some similarity of code in the helper methods. I decided to keep them separate to make the 'invalid_seat_request' method very readable. It is a trade off between readability and keeping the code DRY. It may be a matter of personal taste, but this way it is clear exactly what each method does, and it keeps the methods short and punchy.
+
+
+
+
+
+
+In Github the program has been run, creating the file 'cinema_seats.md' so the resulting output can be seen. I used Markdown so it was Github friendly, but in real life this could go to a text file or html etc  depending on the needs of the user. 
 
 `````
 How to run the file.
 
 In the terminal cd to the repo, and run the file using 'ruby lib/cinema_seats.rb' 
+Use the rspec command to see the tests pass.
 `````
 
-``````
+
 ###The Challenge
-``````
+
 
 A cinema has a theatre of 100 rows, each with 50 seats. Customers request particular seats when making a booking.
 Bookings are processed on a first-come, first-served basis. A booking is accepted as long as it is for five or fewer
@@ -31,8 +42,4 @@ The text file of bookings contains one booking per line, where a booking is of t
   (<id>,<index of first seat row>:<index of first seat within row>,<index of last seat row>:<index of last seat within row>),
 Rows and seats are both 0-indexed. Note the trailing comma is absent on the final line.
 
-You should treat this as an opportunity to demonstrate your coding style. Solutions should ideally be written in Java
-or C#, but solutions in Ruby, JavaScript and Scala are also acceptable. Please discuss with Softwire before using any
-other language.
-
-Send the output of your program and the code to gareth@softwire.com.
+You should treat this as an opportunity to demonstrate your coding style. 

@@ -4,7 +4,7 @@ describe 'CinemaSeats'  do
       let(:cinemaseats) {CinemaSeats.new}
 
   it 'should be able to show an array of numbered seats' do
-    expect(cinemaseats.empty_seats).to include(1..50)
+    expect(cinemaseats.seatmap).to include(1..50)
   end
 
   it 'should have a total of 50 * 100 seats' do 
@@ -63,6 +63,11 @@ describe 'CinemaSeats'  do
                                                  20, 21, 22, 23, 24, "booked", "booked", "booked", "booked", 29, 
                                                  30, 31, "booked", "booked", "booked", 35, 36, 37, 38, 39, 
                                                  40, 41, 42, 43, "booked", 45, 46, 47, 48, 49, 50])
+  end
+
+  it 'should count the number of failed bookings' do 
+    cinemaseats.process_bookings
+    expect(cinemaseats.failed_bookings.uniq.count).to be(11)
   end
 
    it 'should output the updated seatmap to a markdown file' do

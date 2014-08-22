@@ -7,9 +7,6 @@ class CinemaSeats
 
     attr_accessor :seatmap, :failed_bookings
 
-  def empty_seats
-    @seatmap
-  end
 
   def book_seat row, seat
     bookit = @seatmap[row]
@@ -60,7 +57,7 @@ class CinemaSeats
   def process_bookings
     make_bookings
     num = @failed_bookings.uniq.count
-    puts "### Updated Seatmap with all confirmed bookings. ".center(110)
+    puts " Updated Seatmap with all confirmed bookings. ".center(110)
     puts "––––––––––––––––––––––––––––––––––––––––––––––––––".center(110)
     puts " Please note there were #{num} rejected bookings. ".center(110)
     count = 0
