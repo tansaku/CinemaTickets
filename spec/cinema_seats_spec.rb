@@ -72,6 +72,6 @@ describe 'CinemaSeats'  do
 
    it 'should output the updated seatmap to a markdown file' do
     cinemaseats.save_results_to_file
-    expect(File.exists?('cinema_seats.md')).to be true
+    expect(File.exists?('cinema_seats_test_results.md')).to be true
   end
 end
