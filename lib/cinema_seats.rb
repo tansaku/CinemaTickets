@@ -58,7 +58,7 @@ class CinemaSeats
     make_bookings
     num = @failed_bookings.uniq.count
     puts " Updated Seatmap with all confirmed bookings. ".center(110)
-    puts "––––––––––––––––––––––––––––––––––––––––––––––––––".center(110)
+    puts "==============================================".center(110)
     puts " Please note there were #{num} rejected bookings. ".center(110)
     count = 0
     @seatmap.each do |row|
