@@ -69,7 +69,7 @@ class CinemaSeats
   end
 
   def save_results_to_file
-    $stdout = File.open('cinema_seats.md', 'w') 
+    $stdout = File.open('cinema_seats_test_results.md', 'w') 
     $stdout.sync = true
     process_bookings
   end

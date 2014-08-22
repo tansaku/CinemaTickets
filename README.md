@@ -11,7 +11,7 @@ I tackled this project using Ruby, in a TDD environment using RSpec. Strictly st
 
 I had some debate about the 'invalid_seat_request' method. This method calls the three helper methods to determine whether a seat request is valid or not, according to the rules in the challenge. It could have been written as one, fairly long method, and there is some similarity of code in the helper methods. I decided to keep them separate to make the 'invalid_seat_request' method very readable. It is a trade off between readability and keeping the code DRY. It may be a matter of personal taste, but this way it is clear exactly what each method does, and it keeps the methods short and punchy.
 
-
+After completing the task using the test data, I have run the code using the full 'booking_requests' data file provided. The results are in the 'cinema_seats.md' file. Running this caused tests to break, but in each case it is because the test was looking for specific data from the test data, and not the 'real' booking request file. The full booking requests file resulted in 36 failed bookings.
 
 
 
