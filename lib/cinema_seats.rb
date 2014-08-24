@@ -1,5 +1,6 @@
 class CinemaSeats
-   
+
+# Generate seatmap and empty array for failed bookings.
   def initialize 
     @seatmap = ((1..50).to_a * 100).each_slice(50).to_a
     @failed_bookings = []
@@ -7,7 +8,7 @@ class CinemaSeats
 
     attr_accessor :seatmap, :failed_bookings
 
-
+# Iterate through the row and book seat if at the required seat number
   def book_seat row, seat
     bookit = @seatmap[row]
     bookit.collect! { |i| i == seat+1 ? "booked" : i }  
@@ -25,7 +26,8 @@ class CinemaSeats
     end
     cleaned_data
   end
-  
+
+# Calling remove_bad_bookings first, then for each request remove if invalid or book seat.
   def make_bookings
     remove_bad_booking_requests.map do |data|
     request = data, row = data[1], seats = data[2]..data[4] 
@@ -36,12 +38,14 @@ class CinemaSeats
     end  
   end
 
+# Method below calling 3 helper methods in order to remove invalid requests.
   def invalid_seat_request row,seat,request
     seat_already_booked(row,seat) ||
     only_one_free_seat_to_left(row,seat) ||
     only_one_free_seat_to_right(row,seat)  ? @failed_bookings << request.to_s : false       
   end
 
+# Three helper methods, to make the invalid_seat_request method readable.
   def seat_already_booked row, seat
     @seatmap[row][seat].is_a?(String) 
   end
@@ -54,6 +58,7 @@ class CinemaSeats
     @seatmap[row][seat + 1].is_a?(Integer) && @seatmap[row][seat + 2].is_a?(String)
   end
 
+# Generate output of updated seatmap, remove the invalid bookings and count them
   def process_bookings
     make_bookings
     num = @failed_bookings.uniq.count
